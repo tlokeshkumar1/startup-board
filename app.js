@@ -14,7 +14,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/blogs', blogRoutes);
 
-const uri = "mongodb+srv://root:root@cluster0.0x8lyfl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://root:root@startupboard.mf8es7e.mongodb.net/?retryWrites=true&w=majority&appName=Startupboard";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => app.listen(5000, () => console.log('Server running on port 5000')))
   .catch((error) => console.log(`${error} did not connect`));
