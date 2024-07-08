@@ -1,0 +1,12 @@
+.auth-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8px;
+  }
+  
+  .auth-form {
+    width: 100%;
+    margin-top: 24px;
+  }
+  

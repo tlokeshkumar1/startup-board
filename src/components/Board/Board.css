@@ -1,0 +1,12 @@
+.create-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .post-card {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
