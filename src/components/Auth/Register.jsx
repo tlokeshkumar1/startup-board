@@ -44,6 +44,10 @@ const Register = () => {
             Register
           </Button>
         </form>
+        <Box className="auth-link-box">
+          <Typography>Already have an account?</Typography>
+          <Button onClick={() => navigate('/login')}>Login</Button>
+        </Box>
       </Box>
     </Container>
   );

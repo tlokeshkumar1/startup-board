@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../../api';
 import { Button, TextField, Container, Typography, Box } from '@mui/material';
 import './Auth.css';
@@ -37,6 +37,9 @@ const Login = () => {
             Login
           </Button>
         </form>
+        <Box className="center-link">
+          <Link to="/register">Register</Link>
+        </Box>
       </Box>
     </Container>
   );
