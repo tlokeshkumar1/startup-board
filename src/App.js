@@ -1,5 +1,7 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { Container } from '@mui/material'; // Import MUI Container for layout
+import Navbar from './components/Navbar'; // Import Navbar component
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import Board from './components/Board/Board';
@@ -12,14 +14,17 @@ const App = () => {
 
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/board" element={token ? <Board /> : <Navigate to="/login" />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
-      </Routes>
+      <Navbar /> {/* Include Navbar component */}
+      <Container maxWidth="md"> {/* Use Container for content */}
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/board" element={token ? <Board /> : <Login />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+        </Routes>
+      </Container>
     </div>
   );
 }
