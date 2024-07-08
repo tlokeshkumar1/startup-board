@@ -3,23 +3,22 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
+const saltRounds = 12;
 
 router.post('/register', async (req, res) => {
-  const { name, email, password, userType } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
-    }
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const newUser = new User({ name, email, password: hashedPassword, userType });
-    await newUser.save();
+    // Store hashedPassword in your database
+    await User.create({ email, password: hashedPassword });
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Something went wrong' });
+    console.error('Registration error:', error);
+    res.status(500).json({ error: 'Registration failed' });
   }
 });
 
@@ -27,21 +26,26 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Fetch user from database by email
     const user = await User.findOne({ email });
+
     if (!user) {
-      return res.status(400).json({ message: 'User not found' });
+      return res.status(404).json({ error: 'User not found' });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
-    if (!isPasswordCorrect) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+    // Compare hashed passwords
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user._id, userType: user.userType }, 'test', { expiresIn: '1h' });
+    // Generate and send JWT token for authentication (not shown in this example)
 
-    res.status(200).json({ token, userType: user.userType });
+    res.status(200).json({ token: 'generated_token_here' }); // Example response
   } catch (error) {
-    res.status(500).json({ message: 'Something went wrong' });
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'Login failed' });
   }
 });
 
